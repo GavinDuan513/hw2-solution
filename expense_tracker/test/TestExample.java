@@ -3,10 +3,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.text.ParseException;
 
+import model.Filter.CategoryFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -112,5 +114,51 @@ public class TestExample {
         double totalCost = getTotalCost();
         assertEquals(0.00, totalCost, 0.01);
     }
-    
+
+
+    @Test
+    public void testFilterByCategory() {
+        assertEquals(0, model.getTransactions().size());
+
+        Transaction addedTransaction1 = new Transaction(50.0, "food");
+        Transaction addedTransaction2 = new Transaction(150.0, "food");
+        Transaction addedTransaction3 = new Transaction(5.0, "travel");
+        Transaction addedTransaction4 = new Transaction(33.0, "bills");
+        model.addTransaction(addedTransaction1);
+        model.addTransaction(addedTransaction2);
+        model.addTransaction(addedTransaction3);
+        model.addTransaction(addedTransaction4);
+        CategoryFilter catFilter = new CategoryFilter("food");
+        List<Transaction> filteredList = catFilter.filter(model.getTransactions());
+
+        assertEquals(2, filteredList.size());
+        for(Transaction transaction : filteredList){
+            assertEquals("food", transaction.getCategory());
+        }
+    }
+
+    @Test
+    public void testUndoDisallowed() {
+      assertTrue(model.getTransactions().size() == 0);
+      assertTrue(!view.getUndoBtn().isEnabled());
+    }
+
+    @Test
+    public void testUndoAllowed() {
+        assertTrue(model.getTransactions().size() == 0);
+        Transaction addedTransaction1 = new Transaction(45.0, "food");
+        Transaction addedTransaction2 = new Transaction(72.0, "food");
+        model.addTransaction(addedTransaction1);
+        model.addTransaction(addedTransaction2);
+        model.undoTransaction();
+        assertEquals(1, model.getTransactions().size());
+        double totalCost=0;
+        for(Transaction transaction: model.getTransactions()){
+            totalCost += transaction.getAmount();
+        }
+        assertEquals(45.0, totalCost, 0.01);
+
+    }
+
+
 }
