@@ -38,6 +38,15 @@ public class ExpenseTrackerApp {
       }
     });
 
+    // Handle undo transaction button clicks
+      view.getUndoBtn().addActionListener(e -> {
+          boolean undoed = controller.undoTransaction();
+          if (!undoed) {
+              JOptionPane.showMessageDialog(view, "Undo Unavailable");
+              view.toFront();
+          }
+      });
+
       // Add action listener to the "Apply Category Filter" button
     view.addApplyCategoryFilterListener(e -> {
       try{
