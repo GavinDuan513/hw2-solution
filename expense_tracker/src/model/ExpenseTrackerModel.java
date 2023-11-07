@@ -8,11 +8,12 @@ public class ExpenseTrackerModel {
 
   //encapsulation - data integrity
   private List<Transaction> transactions;
-  private List<Transaction> undoTransactions;
+
+  private List<List<Transaction>> undoTransactionsList;
 
   public ExpenseTrackerModel() {
     transactions = new ArrayList<>();
-    undoTransactions = null;
+    undoTransactionsList = new ArrayList<List<Transaction>>();
   }
 
   public void addTransaction(Transaction t) {
@@ -20,12 +21,14 @@ public class ExpenseTrackerModel {
     if (t == null) {
       throw new IllegalArgumentException("The new transaction must be non-null.");
     }
-    undoTransactions = new ArrayList<>(transactions);
+//    undoTransactions = new ArrayList<>(transactions);
+    undoTransactionsList.add(new ArrayList<>(transactions));
     transactions.add(t);
   }
 
   public void removeTransaction(Transaction t) {
-    undoTransactions = new ArrayList<>(transactions);
+//    undoTransactions = new ArrayList<>(transactions);
+    undoTransactionsList.add(new ArrayList<>(transactions));
     transactions.remove(t);
   }
 
@@ -35,7 +38,7 @@ public class ExpenseTrackerModel {
   }
 
   public boolean undoAvailable(){
-    if (undoTransactions == null) {
+    if (undoTransactionsList.size() == 0) {
       return false;
     } else {
       return true;
@@ -45,8 +48,7 @@ public class ExpenseTrackerModel {
     if (!undoAvailable()) {
       System.out.println("Undo Unavailable");
     } else {
-      transactions = new ArrayList<>(undoTransactions);
-      undoTransactions = null;
+      transactions = undoTransactionsList.remove(undoTransactionsList.size() - 1);
     }
   }
 

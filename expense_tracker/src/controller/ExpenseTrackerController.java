@@ -48,7 +48,7 @@ public class ExpenseTrackerController {
     Transaction t = new Transaction(amount, category);
     model.addTransaction(t);
     view.getTableModel().addRow(new Object[]{t.getAmount(), t.getCategory(), t.getTimestamp()});
-    view.setUndoBtn(true);
+    view.setUndoBtn(model.undoAvailable());
     refresh();
     return true;
   }
@@ -57,7 +57,7 @@ public class ExpenseTrackerController {
     boolean result = model.undoAvailable();
     if (result) {
       model.undoTransaction();
-      view.setUndoBtn(false);
+      view.setUndoBtn(model.undoAvailable());
       refresh();
       return true;
     } else {
