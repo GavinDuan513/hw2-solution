@@ -92,6 +92,7 @@ public class ExpenseTrackerController {
     if(selected != -1){
       Transaction select_transaction = model.getTransactions().get(selected);
       model.removeTransaction(select_transaction);
+      view.setUndoBtn(model.undoAvailable());
       refresh();
     }else{
       JOptionPane.showMessageDialog(view, "No record selected");
