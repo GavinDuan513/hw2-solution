@@ -85,4 +85,19 @@ public class ExpenseTrackerController {
       view.toFront();}
 
   }
+
+  // apply the remove action
+  public void applyRemove(){
+    int selected = view.getSelectedRow();
+    if(selected != -1){
+      Transaction select_transaction = model.getTransactions().get(selected);
+      model.removeTransaction(select_transaction);
+      view.setUndoBtn(model.undoAvailable());
+      refresh();
+    }else{
+      JOptionPane.showMessageDialog(view, "No record selected");
+    }
+
+  }
+
 }

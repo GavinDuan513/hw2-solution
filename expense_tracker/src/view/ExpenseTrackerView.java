@@ -28,6 +28,7 @@ public class ExpenseTrackerView extends JFrame {
   private JButton amountFilterBtn;
 
   private JButton undoBtn;
+  private JButton removeBtn;
 
   
 
@@ -49,11 +50,11 @@ public class ExpenseTrackerView extends JFrame {
     NumberFormat format = NumberFormat.getNumberInstance();
 
     amountField = new JFormattedTextField(format);
-    amountField.setColumns(10);
+    amountField.setColumns(5);
 
     
     JLabel categoryLabel = new JLabel("Category:");
-    categoryField = new JTextField(10);
+    categoryField = new JTextField(5);
     
 
     JLabel categoryFilterLabel = new JLabel("Filter by Category:");
@@ -67,7 +68,9 @@ public class ExpenseTrackerView extends JFrame {
     undoBtn = new JButton("Undo");
     undoBtn.setEnabled(false);
 
-  
+    // Implementation of Undo
+    removeBtn = new JButton("Remove");
+
 
   
     // Layout components
@@ -77,6 +80,7 @@ public class ExpenseTrackerView extends JFrame {
     inputPanel.add(categoryLabel); 
     inputPanel.add(categoryField);
     inputPanel.add(addTransactionBtn);
+    inputPanel.add(removeBtn);
 
     JPanel buttonPanel = new JPanel();
     buttonPanel.add(amountFilterBtn);
@@ -185,6 +189,17 @@ public class ExpenseTrackerView extends JFrame {
   public void setUndoBtn(boolean status){
       undoBtn.setEnabled(status);
   }
+
+  // getter for remove button
+    public JButton getRemoveBtn(){
+      return removeBtn;
+    }
+
+    public int getSelectedRow(){
+      int selectedRow = transactionsTable.getSelectedRow();
+      return selectedRow;
+    }
+
 
   public void highlightRows(List<Integer> rowIndexes) {
       // The row indices are being used as hashcodes for the transactions.

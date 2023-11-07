@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.text.ParseException;
@@ -120,7 +121,7 @@ public class TestExample {
         double totalCost = getTotalCost();
         assertEquals(0.00, totalCost, 0.01);
     }
-
+    
     @Test
     public void testAddTransactionViewUpdated() {
         // Pre-condition: List of transactions is empty
@@ -284,5 +285,28 @@ public class TestExample {
     }
 
 
-    
+    @Test
+    public void testUndoDisallowed() {
+      assertTrue(model.getTransactions().size() == 0);
+      assertTrue(!view.getUndoBtn().isEnabled());
+    }
+
+    @Test
+    public void testUndoAllowed() {
+        assertTrue(model.getTransactions().size() == 0);
+        Transaction addedTransaction1 = new Transaction(45.0, "food");
+        Transaction addedTransaction2 = new Transaction(72.0, "food");
+        model.addTransaction(addedTransaction1);
+        model.addTransaction(addedTransaction2);
+        model.undoTransaction();
+        assertEquals(1, model.getTransactions().size());
+        double totalCost=0;
+        for(Transaction transaction: model.getTransactions()){
+            totalCost += transaction.getAmount();
+        }
+        assertEquals(45.0, totalCost, 0.01);
+
+    }
+
+
 }

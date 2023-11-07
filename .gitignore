@@ -1,4 +1,16 @@
+# Ignore build folders
+# jdoc/
+bin/
 
+# Ignore config files
+application.properties
+
+# Ignore IDE files 
+.idea/
+*.iml
 *.class
-*.xml
-hw2-solution.iml
+
+# Ignore dependency caches
+node_modules/
+.mvn
+
