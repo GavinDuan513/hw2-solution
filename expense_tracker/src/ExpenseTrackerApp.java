@@ -34,7 +34,7 @@ public class ExpenseTrackerApp {
       boolean added = controller.addTransaction(amount, category);
       
       if (!added) {
-        JOptionPane.showMessageDialog(view, "Invalid amount or category entered");
+        view.getErrorMessage();
         view.toFront();
       }
     });

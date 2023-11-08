@@ -162,6 +162,9 @@ public class TestExample {
         assertEquals(0, model.getTransactions().size());
 
         // Check error message displayed
+        String errormag = view.getErrorMessage();
+        String msgExp = "Invalid amount or category entered";
+        assertEquals(msgExp, errormag);
 
     }
 

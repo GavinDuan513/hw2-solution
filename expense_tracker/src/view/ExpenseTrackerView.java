@@ -200,6 +200,19 @@ public class ExpenseTrackerView extends JFrame {
       return selectedRow;
     }
 
+    public String getErrorMessage(){
+      String errorMessage = "Invalid amount or category entered";
+      JOptionPane optionPane = new JOptionPane(errorMessage, JOptionPane.ERROR_MESSAGE);
+      JDialog dialog = optionPane.createDialog("Error");
+
+//      JOptionPane.showMessageDialog(null, errorMessage);
+      Timer timer = new Timer(100, e -> dialog.dispose());
+      timer.setRepeats(false); // Stop the timer after one firing
+      timer.start();
+      dialog.setVisible(true);
+      return errorMessage;
+    }
+
 
   public void highlightRows(List<Integer> rowIndexes) {
       // The row indices are being used as hashcodes for the transactions.
