@@ -287,19 +287,31 @@ public class TestExample {
 
     @Test
     public void testUndoDisallowed() {
+      // Pre-condition: List of transactions is empty
       assertTrue(model.getTransactions().size() == 0);
+      // Perform the action: trying to click on the undo button, but the button is disabled to click
       assertTrue(!view.getUndoBtn().isEnabled());
+      // Post-condition: List of transactions is still empty
+      assertTrue(model.getTransactions().size() == 0);
     }
 
     @Test
     public void testUndoAllowed() {
+        // Pre-condition: List of transactions is empty
         assertTrue(model.getTransactions().size() == 0);
+        // Perform the action: add two transactions
         Transaction addedTransaction1 = new Transaction(45.0, "food");
         Transaction addedTransaction2 = new Transaction(72.0, "food");
         model.addTransaction(addedTransaction1);
         model.addTransaction(addedTransaction2);
+
+        // Perform the action: Undo the most recent action
         model.undoTransaction();
+
+        // Post-condition: List of transactions should contain one transaction after undo once.
         assertEquals(1, model.getTransactions().size());
+
+        // Check the total cost in table after undo one transaction
         double totalCost=0;
         for(Transaction transaction: model.getTransactions()){
             totalCost += transaction.getAmount();
