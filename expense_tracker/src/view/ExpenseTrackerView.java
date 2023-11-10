@@ -201,16 +201,17 @@ public class ExpenseTrackerView extends JFrame {
     }
 
     public String getErrorMessage(){
-      String errorMessage = "Invalid amount or category entered";
-      JOptionPane optionPane = new JOptionPane(errorMessage, JOptionPane.ERROR_MESSAGE);
+      JOptionPane optionPane = new JOptionPane("Invalid amount or category entered", JOptionPane.ERROR_MESSAGE);
+
       JDialog dialog = optionPane.createDialog("Error");
 
-//      JOptionPane.showMessageDialog(null, errorMessage);
-      Timer timer = new Timer(100, e -> dialog.dispose());
-      timer.setRepeats(false); // Stop the timer after one firing
+      Object msg = optionPane.getMessage();
+
+      Timer timer = new Timer(500, e -> dialog.dispose());
+      timer.setRepeats(false);
       timer.start();
       dialog.setVisible(true);
-      return errorMessage;
+      return msg.toString();
     }
 
 
