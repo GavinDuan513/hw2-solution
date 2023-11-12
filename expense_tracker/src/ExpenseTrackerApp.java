@@ -34,7 +34,7 @@ public class ExpenseTrackerApp {
       boolean added = controller.addTransaction(amount, category);
       
       if (!added) {
-        view.getErrorMessage();
+        view.showInvalidInput();
         view.toFront();
       }
     });
