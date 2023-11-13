@@ -74,6 +74,7 @@ public class ExpenseTrackerView extends JFrame {
 
     // Implementation of Undo
     removeBtn = new JButton("Remove");
+    removeBtn.setEnabled(false);
 
 
   
@@ -198,33 +199,37 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   // getter for remove button
-    public JButton getRemoveBtn(){
-      return removeBtn;
-    }
+  public JButton getRemoveBtn(){
+    return removeBtn;
+  }
 
-    public int getSelectedRow(){
-      int selectedRow = transactionsTable.getSelectedRow();
-      return selectedRow;
-    }
+  public void setRemoveBtn(boolean status){
+    removeBtn.setEnabled(status);
+  }
 
-    public String getErrorMessage(){
-      Object msg = optionPane.getMessage();
-      return msg.toString();
-    }
+  public int getSelectedRow(){
+    int selectedRow = transactionsTable.getSelectedRow();
+    return selectedRow;
+  }
 
-    public JOptionPane getOptionPane(){
-      return optionPane;
-    }
+  public String getErrorMessage(){
+    Object msg = optionPane.getMessage();
+    return msg.toString();
+  }
 
-    public JDialog getDialog(){
-      return dialog;
-    }
+  public JOptionPane getOptionPane(){
+    return optionPane;
+  }
+
+  public JDialog getDialog(){
+    return dialog;
+  }
 
 
 
-    public void showInvalidInput(){
-      dialog.setVisible(true);
-    }
+  public void showInvalidInput(){
+    dialog.setVisible(true);
+  }
 
 
   public void highlightRows(List<Integer> rowIndexes) {
