@@ -165,7 +165,7 @@ public class TestExample {
 
         JDialog dialog = view.getDialog();
 
-        Timer timer = new Timer(500, e -> dialog.dispose());
+        Timer timer = new Timer(10, e -> dialog.dispose());
         timer.setRepeats(false);
         timer.start();
         view.showInvalidInput();
