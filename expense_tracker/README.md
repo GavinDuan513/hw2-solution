@@ -19,8 +19,9 @@ This code is compiled with ```openjdk 17.0.7 2023-04-18```. Please update your J
 
 # New Functionality
 
-## Transaction Select and Remove
-User could select the row they want to remove and then click on the remove button on top to remove the transaction.
+## Transaction Remove (Simple Undo)
+User could select the row they want to remove and then click on the remove button on top to remove the transaction. This is the undo function asked by the assignment. Test on Undo Allowed and 
+Undo Disallowed are designed for this functionality. 
 
-## Transaction Undo
-The Undo button will be available after user add/remove transaction from the table. Everytime user click the undo button, the last add/remove action will be reverted.  
+## Transaction Undo (Complex Undo)
+We implement the undo as the Undo button will be available after user add/remove transaction from the table. Everytime user click the undo button, the last add/remove action will be reverted.  
