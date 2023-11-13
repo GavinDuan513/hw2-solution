@@ -170,9 +170,10 @@ public class TestExample {
         timer.start();
         view.showInvalidInput();
 
-        String errormag = view.getErrorMessage();
+        // Check the message shown is as expected.
+        String errormsg = view.getErrorMessage();
         String msgExp = "Invalid amount or category entered";
-        assertEquals(msgExp, errormag);
+        assertEquals(msgExp, errormsg);
 
     }
 
