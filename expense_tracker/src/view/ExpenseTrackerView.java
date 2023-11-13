@@ -30,6 +30,10 @@ public class ExpenseTrackerView extends JFrame {
   private JButton undoBtn;
   private JButton removeBtn;
 
+  private JOptionPane optionPane;
+
+  private JDialog dialog;
+
   
 
   public ExpenseTrackerView() {
@@ -96,6 +100,9 @@ public class ExpenseTrackerView extends JFrame {
     setSize(600, 400); // Increase the size for better visibility
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
+
+    optionPane = new JOptionPane("Invalid amount or category entered", JOptionPane.ERROR_MESSAGE);
+    dialog = optionPane.createDialog("Error");
   
   
   }
@@ -201,17 +208,22 @@ public class ExpenseTrackerView extends JFrame {
     }
 
     public String getErrorMessage(){
-      JOptionPane optionPane = new JOptionPane("Invalid amount or category entered", JOptionPane.ERROR_MESSAGE);
-
-      JDialog dialog = optionPane.createDialog("Error");
-
       Object msg = optionPane.getMessage();
-
-      Timer timer = new Timer(500, e -> dialog.dispose());
-      timer.setRepeats(false);
-      timer.start();
-      dialog.setVisible(true);
       return msg.toString();
+    }
+
+    public JOptionPane getOptionPane(){
+      return optionPane;
+    }
+
+    public JDialog getDialog(){
+      return dialog;
+    }
+
+
+
+    public void showInvalidInput(){
+      dialog.setVisible(true);
     }
 
 

@@ -162,9 +162,18 @@ public class TestExample {
         assertEquals(0, model.getTransactions().size());
 
         // Check error message displayed
-        String errormag = view.getErrorMessage();
+
+        JDialog dialog = view.getDialog();
+
+        Timer timer = new Timer(10, e -> dialog.dispose());
+        timer.setRepeats(false);
+        timer.start();
+        view.showInvalidInput();
+
+        // Check the message shown is as expected.
+        String errormsg = view.getErrorMessage();
         String msgExp = "Invalid amount or category entered";
-        assertEquals(msgExp, errormag);
+        assertEquals(msgExp, errormsg);
 
     }
 
