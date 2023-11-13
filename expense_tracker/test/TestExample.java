@@ -302,7 +302,7 @@ public class TestExample {
       // Pre-condition: List of transactions is empty
       assertTrue(model.getTransactions().size() == 0);
       // Perform the action: trying to click on the undo button, but the button is disabled to click
-      assertTrue(!view.getUndoBtn().isEnabled());
+      assertTrue(!view.getRemoveBtn().isEnabled());
       // Post-condition: List of transactions is still empty
       assertTrue(model.getTransactions().size() == 0);
     }
@@ -311,24 +311,32 @@ public class TestExample {
     public void testUndoAllowed() {
         // Pre-condition: List of transactions is empty
         assertTrue(model.getTransactions().size() == 0);
+        assertTrue(!view.getRemoveBtn().isEnabled());
+
         // Perform the action: add two transactions
-        Transaction addedTransaction1 = new Transaction(45.0, "food");
-        Transaction addedTransaction2 = new Transaction(72.0, "food");
-        model.addTransaction(addedTransaction1);
-        model.addTransaction(addedTransaction2);
+        double amt = 45.0;
+        String category = "food";
+        controller.addTransaction(amt, category);
 
-        // Perform the action: Undo the most recent action
-        model.undoTransaction();
+        // Perform the action: Undo the action by selecting the transaction programmatically
+        JTable table = view.getTransactionsTable();
+        table.setRowSelectionInterval(0,0);
+        controller.applyRemove();
 
-        // Post-condition: List of transactions should contain one transaction after undo once.
-        assertEquals(1, model.getTransactions().size());
 
-        // Check the total cost in table after undo one transaction
-        double totalCost=0;
-        for(Transaction transaction: model.getTransactions()){
-            totalCost += transaction.getAmount();
-        }
-        assertEquals(45.0, totalCost, 0.01);
+        // Post-condition: List of transactions should contain zero transaction after undo once.
+        assertEquals(0, model.getTransactions().size());
+
+        // Check the transaction is removed from the table after undo, and only the total row is displayed
+        int rowCnt = table.getRowCount();
+        assertEquals(rowCnt, 1);
+
+        // Check the total cost shown in table after undo one transaction
+        Object totalRowAmount = table.getValueAt(0, 3);
+        assertEquals(totalRowAmount, 0.0);
+
+        // The remove button should be disabled again since there is no transactions
+        assertTrue(!view.getRemoveBtn().isEnabled());
 
     }
 

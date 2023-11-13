@@ -49,6 +49,7 @@ public class ExpenseTrackerController {
     model.addTransaction(t);
     view.getTableModel().addRow(new Object[]{t.getAmount(), t.getCategory(), t.getTimestamp()});
     view.setUndoBtn(model.undoAvailable());
+    view.setRemoveBtn(model.removeAvailable());
     refresh();
     return true;
   }
@@ -88,16 +89,19 @@ public class ExpenseTrackerController {
 
   // apply the remove action
   public void applyRemove(){
-    int selected = view.getSelectedRow();
-    if(selected != -1){
-      Transaction select_transaction = model.getTransactions().get(selected);
-      model.removeTransaction(select_transaction);
-      view.setUndoBtn(model.undoAvailable());
-      refresh();
-    }else{
-      JOptionPane.showMessageDialog(view, "No record selected");
+    boolean removeAval = model.removeAvailable();
+    if(removeAval){
+      int selected = view.getSelectedRow();
+      if(selected != -1){
+        Transaction select_transaction = model.getTransactions().get(selected);
+        model.removeTransaction(select_transaction);
+        view.setUndoBtn(model.undoAvailable());
+        view.setRemoveBtn(model.removeAvailable());
+        refresh();
+      }else{
+        JOptionPane.showMessageDialog(view, "No record selected");
+      }
     }
-
   }
 
 }

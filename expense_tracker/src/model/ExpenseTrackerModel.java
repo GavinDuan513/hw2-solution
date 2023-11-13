@@ -52,4 +52,12 @@ public class ExpenseTrackerModel {
     }
   }
 
+  public boolean removeAvailable(){
+    if (transactions.size() == 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
 }
